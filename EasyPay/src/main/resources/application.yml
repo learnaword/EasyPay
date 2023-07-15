@@ -1,0 +1,39 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: /
+  mvc:
+    view:
+      suffix: .html
+      prefix: /
+
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    locale: zh_CN
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/alipayment?serverTimezone=GMT
+    username: root
+    password: 123456
+    type: com.alibaba.druid.pool.DruidDataSource
+
+
+mybatis-plus:
+  configuration: #sql日志
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    mapper-locations: classpath:com/qfedu/mapper/xml/*.xml
+
+#支付宝的配置信息
+alipay:
+  app_id: 9021000123605533
+  merchant_private_key: MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCiZkbZXReO4ljtMuzfKCBuxt3EJHjfQ2Gk/CloHuPcsp6/E5d6zwUCUGVr9I0Byngn/6W/Dqg0jP2JPMAN5OIxkYzgGbUJ0XJQCEo55EV533EjBulh8HtmwUdq2fc76zR+yZn1c23l5TnxxonC+IN4Fzxex+KERwemtEK8EOGj6LNMascDjKXfaiLeY7k1Jn0JLDx7/iw7pBi1EsuIONOak48aHGrhmeP6Ies465D5auJs0LmxBmP7Uu22WYPznAEx7E0BgBCy9Uli7rIaarWnNGPEDifbItIXyAxvSohpBfvmvUTF8FzEEnNZETEEZC1ly8ndgzstrHrOQOuefU9xAgMBAAECggEAJU21DIzzsmCP6Lx/6KrA+HE506pFEZPaxBkgMciWssVc7atEanNPRT7ObUPZeAXYH+f7XK2zOY8BVhrcStS+mIBEid2d1kmEJpog4rdqthn7VP5rcZHZ5rqS+xpiTiMzBcStVtJS9jH3Y3AliOGo4VcFCQiFIblnKoXRpn2CNzIIrfObKhv4ZVdBvzgE0EHwXlIPTlpCz492Ts/707b753chQGIaWFe3DTzhuvFBaQmbR4Y0XNQQUZzjBZClt16Ea9Zk2eTni/XdV2wFSFAguztYMvIY/tcpmoEgpbwGp3o3H1ZnsbBc5vKscmnDsFHshLjy4udR0dKnzJiYY2thgQKBgQDdnlfJZczcQ2Vc9Dz15bKsVH+2+3GiASDXAN4SU5CRE1bno7fPZRxF2f7lEkbjXQKkg391pHwG8tprGqTbSMOZw7ppr/6hsjcDDoBXrEx/OMgFtCujUJmZk+2Mu3q1N/qnLrkAbuFT6sMr/MVDrhsyJlXSgV+asdxDbZB2dEnNKQKBgQC7mAe/hGRKJfkFVj31MxvIz5G6LZHcITzso1TjC1H7EFE38vOtxs2wixF1O8gCbdzthkCi6/wcP3IjrRdExu8x5CowlhNiRKOWiiUmWpJgRo+uL9Dmrj6pTQP4+Hfmcz+p2w5RDv0ZzEps7JE0n1jZqwvb4bJKUIsc0/IMRmZxCQKBgQCC9xT3voIe1HEtSmRQCErbTiAfOV6Al1wZ0rhpahqvsRcVUonINP9NRDM+mdtsd0WdhNwo4GgvDwsGajtsHwcAcktSM6AtXAzocIRlyzt1n0+NF1kGbRYoTOP/27b7KrakX5cSa3QbTEvETd8hTN1jeIYVHUErQNpiune5mKUYaQKBgQC01fFiJXWoJMLQ6jn/zKzT/4QzPQqGcWQRmcGSvK7invAsRv+wXRybOvQxVtePv+hg8DIO2/3EHUUiLxFnM34RUil5fLJi4FfyHmmBd33zYRHQkDeIqB+vhJZ3ws2SUTblvk0mxpQl8lEsfz/awmEcM07TP9Zm3Q29VHLYcmT+QQKBgFye49/0jxqLq9HLrC1AIn9phOqic4bfgEdCzjl/vul9rMljrj5QeTC96eNeEywz1DQELIYU91ycopXs3U18zTqXT6ex4UjCEX8yxzbUD2AO4MAItbiaEZBH+4i+LAftz6xeAfI/BP228bBTb/prpDc9MPF5MH9OrhBVYRPSRyWw
+  alipay_public_key: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0V5+2fwtVHThTLc17wc6DCfObCQ9vmmg1tD6nF0gKYc0LhqgkSUL3BxgaQ2nSAcg4fIGYDSeSTOE4DbghJ14r6mkXjcGnR/urJJkmU2W08yAHfhIZDBGjejufz2OhJsWCo0L/itwO+IxgHIc2OgYS7vyd2cK1Y/MQZjbVDoPMgN3i0wkRfUaZ5eyXv2sljom3BxgpbHT7H+8ZVCDBFJZwRUF0xYYOz0TdKQev4w/zvWUYIp8yT8TetIwdj8FjA6VbZcbOIsky6Ytahsrc3g9YU7SA+idsG76BLhbvwNH62NVmrXENTNy2kv6bKGEp+qnLQ5tOTBfsXWD0XqluEyVVQIDAQAB
+  notify_url: http://bm32ez.natappfree.cc/alipay/trade/notify
+  return_url: http://localhost:8081/success
+  sign_type: RSA2
+  charset: utf-8
+  gatewayUrl: https://openapi-sandbox.dl.alipaydev.com/gateway.do
