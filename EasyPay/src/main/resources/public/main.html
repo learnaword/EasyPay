@@ -6,7 +6,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>千锋教育-强哥</title>
+    <title>EasyPay</title>
     <link rel="stylesheet" href="main.css">
 
 </head>
@@ -31,27 +31,27 @@
                                     <div class="row">
 
                                             <div class="col-lg-3 col-md-4 col-sm-6 animated fadeInUp delay-1s">
-                                                <form  method="post"  action="alipay/trade" target="_blank">
+                                                <form  method="post" id="myForm" target="_blank">
                                                     <div class="course-item">
                                                     <div class="course-img "><a
                                                             href="http://www.qfedu.com/video/couresDetail.html?courseId=128&&subjectId=1"
-                                                            target="_blank" title="千锋出品,必属精品" class="course__img"><img
+                                                            target="_blank" title="商品1" class="course__img"><img
                                                             height="140" width="100%" src="https://kodo.1000phone.com/Fgq91U2S2WII27BEG_QNSwFQD0iM">
                                                         <span
                                                                 class="num">1</span> <span class="stimer">￥0.01</span></a>
                                                     </div>
-                                                    <div class="course-content"><h3 title="千锋出品,必属精品" class="course__title">
+                                                    <div class="course-content"><h3 title="订单创建" class="course__title">
                                                         <a
                                                                 href="/course/detail/1317503462556848129"
-                                                                target="_blank" title="千锋出品,必属精品" class="course__img">千锋java基础课程</a>
+                                                                target="_blank" title="订单创建" class="course__img">订单创建</a>
                                                     </h3>
-                                                        <p class="course__author">学习编程之前你要了解的知识！？</p>
+                                                        <p class="course__author">EasyPay</p>
                                                         <!-- <div class="course-price-wrap">
                                                             <span id="123" class="course__btn"><i
                                                                      class="iconfont iconshouye"></i>  支付宝支付</span></div>-->
-                                                        <button type="submit"
+                                                        <button type="button"
                                                                 class="layui-btn layui-btn-normal layui-icon layui-icon-search layui-btn-radius layui-btn-sm"
-                                                                id="alipay_id">支付宝支付
+                                                                id="alipay_id" onclick="submitForm()">订单创建
                                                         </button>
                                                     </div>
 
@@ -59,25 +59,6 @@
                                                 </form>
                                             </div>
 
-                                        <div class="col-lg-3 col-md-4 col-sm-6 animated fadeInUp delay-1s">
-                                            <div class="course-item">
-                                                <div class="course-img "><a
-                                                        href="http://www.qfedu.com/video/couresDetail.html?courseId=387&&subjectId=1"
-                                                        target="_blank" title="商品02" class="course__img"><img
-                                                        height="140" width="100%" src="https://kodo.1000phone.com/Fo23YDk8GglrQKOPqlADsy6Mfo9e">
-                                                    <span
-                                                            class="num">1</span> <span class="stimer">￥0.01</span></a>
-                                                </div>
-                                                <div class="course-content"><h3 title="" class="course__title"><a
-                                                        href="/course/detail/1317503769349214209"
-                                                        target="_blank" title="" class="course__img">微服务架构项目实战</a>
-                                                </h3>
-                                                    <p class="course__author">工欲善其事，必先利其器！</p>
-                                                    <div class="course-price-wrap"><span class="course__btn"><i
-                                                            class="iconfont iconshouye"></i>  微信支付</span></div>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -92,6 +73,14 @@
 <script src="jquery-3.5.1.min.js"></script>
 <script src="layui/layui.js"></script>
 <script type="text/javascript">
+    function submitForm() {
+        var form = $('#myForm'); // 获取表单
+        var formData = form.serialize(); // 序列化表单数据
+        $.post("/order/create", function (formData){
+           alert("创建成功");
+        })
+
+    }
 </script>
 </body>
 </html>

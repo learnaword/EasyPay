@@ -1,12 +1,5 @@
 [
 	{
-		"title": "商品支付",
-		"icon": "&#xe634;",
-		"href": "main",
-		"spread": false
-
-	},
-	{
 		"title": "订单管理",
 		"icon": "&#xe655;",
 		"href": "orderList",

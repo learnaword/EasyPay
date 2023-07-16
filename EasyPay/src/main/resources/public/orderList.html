@@ -53,10 +53,21 @@
 			elem: '#orderList',
 			url: 'http://localhost:8081/order/list',
 			cellMinWidth: 95,
+			parseData: function (res) { // 解析返回的数据
+				return {
+					code: res.code,
+					data: res.data.list,
+					count: res.data.total
+				};
+			},
 			page: true,
 			height: "full-125",
 			limits: [10, 15, 20, 25],
 			limit: 20,
+			request: {
+				pageName: 'pageNo', // 页码的参数名称，默认：page
+				limitName: 'pageSize' // 每页数据条数的参数名，默认：limit
+			},
 			id: "userListTable",
 			cols: [[
 				{field: 'id', title: 'ID', minWidth: 100, align: "center"},
@@ -68,7 +79,6 @@
 						return d.payType == 'ZFB' ? '<font color=#6495ed>支付宝</font>' :  '<font color=#006400>微信</font>'
 					}
 				},
-				{field: 'status', title: '订单状态', align: 'center',templet:'#status'},
 				{title: '操作', minWidth: 175, templet: '#orderListBar', fixed: "right", align: "center"}
 			]]
 		});
