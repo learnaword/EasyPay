@@ -1,4 +1,5 @@
 package com.example.easypay.service.impl;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -30,10 +31,15 @@ public class OrderServiceImpl implements OrderService {
         order.setSubject("测试数据");
         order.setTotalAmount(1L);
         order.setDescription("这是测试订单");
-        order.setStatus(1);
-        order.setCreateTime(new Timestamp(new Date().getTime()));
-        order.setUpdateTime(new Timestamp(new Date().getTime()));
+        order.setStatus(OrderStatusEnum.NO.getStatus());
+        order.setCreateTime(LocalDateTime.now());
+        order.setUpdateTime(LocalDateTime.now());
         orderMapper.insert(order);
+    }
+
+    @Override
+    public void cancelOrder(Long orderId) {
+        orderMapper.updateById(new OrderDO().setId(orderId).setStatus(OrderStatusEnum.CANCEL.getStatus()));
     }
 
     public PageResult<OrderDO> getOrderPage(OrderPageReqVO orderPageReqVO){

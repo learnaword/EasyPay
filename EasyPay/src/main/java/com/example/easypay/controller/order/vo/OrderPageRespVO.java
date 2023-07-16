@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Data
 @ToString(callSuper = true)
@@ -32,8 +33,8 @@ public class OrderPageRespVO{
     private Integer status;
 
     //下单时间
-    private Timestamp createTime;
+    private LocalDateTime createTime;
 
     //更新时间
-    private Timestamp updateTime;
+    private LocalDateTime updateTime;
 }

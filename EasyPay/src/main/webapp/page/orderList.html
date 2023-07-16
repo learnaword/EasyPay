@@ -32,14 +32,6 @@
 	{{# }else{ }}
 	{{# }}}
 	</script>
-	<!--操作-->
-	<script type="text/html" id="orderNo">
-		<a class="layui-btn layui-btn-xs" lay-event="close">取消订单</a>
-		<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="pay">去支付</a>
-	</script>
-	<script type="text/html" id="orderSuccess">
-		<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="refund">退款</a>
-	</script>
 </form>
 <script type="text/javascript" src="../libs/layui/layui.js"></script>
 
@@ -85,8 +77,10 @@
 						if (d.status == '0') {
 							return '<div id="orderNo"><a class="layui-btn layui-btn-xs" lay-event="close">取消订单</a>' +
 									'<a class="layui-btn layui-btn-xs layui-btn-danger" href="orderPay.html">去支付</a></div>';
-						} else {
+						} else if (d.status == '1'){
 							return '<div id="orderSuccess">\t\t<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="refund">退款</a></div>';
+						} else if (d.status == '2') {
+							return '<div id="orderSuccess">\t\t<a class="layui-btn layui-btn-xs cancel_btn">订单已取消</a></div>';
 						}
 					}
 					}
@@ -100,9 +94,9 @@
 
 			//判断事件 是否为关闭订单
 			if(layEvent == 'close'){
-				layer.confirm("是否确认取消订单?",function (index){
+				layer.confirm("是否确认取消订单1?",function (index){
 					//声明请求路径
-					let url = "pay/closeTrade/"+data.orderNo;
+					let url = "/order/cancel?orderId="+data.id;
 					//发送请求
 					$.post(url,function (data){
 						layer.msg(data.message);

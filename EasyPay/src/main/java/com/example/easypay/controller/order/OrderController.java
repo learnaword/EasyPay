@@ -37,4 +37,10 @@ public class OrderController {
 
         return success(OrderConvert.INSTANCE.convertPage(pageResult));
     }
+
+    @RequestMapping("/cancel")
+    public CommonResult<Boolean> cancelOrder(@Valid Long orderId){
+        orderService.cancelOrder(orderId);
+        return success(true);
+    }
 }
