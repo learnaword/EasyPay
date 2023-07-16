@@ -78,6 +78,8 @@
 		"bodyTab" : "bodyTab"
 	})
 	layui.use(['bodyTab','form','element','layer','jquery'],function(){
+		//切换页面自动刷新
+		window.sessionStorage.setItem("changeRefreshStr", "true");
 		var form = layui.form,
 			element = layui.element;
 			$ = layui.$;
