@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>easypay-订单列表</title>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="../libs/layui/css/layui.css" media="all" />
+	<link rel="stylesheet" href="../css/public.css" media="all" />
+</head>
+<body class="childrenBody">
+<form class="layui-form" id="dataFrm">
+	<table id="orderList" lay-filter="newsList"></table>
+	<!--审核状态-->
+	<script type="text/html" id="status">
+	{{# if(d.status == "WAIT_BUYER_PAY"){ }}
+	<span class="layui-bg-red">待支付</span>
+	{{# }else if(d.status == "TRADE_CLOSED"){ }}
+	<span class="layui-bg-gray">关闭订单</span>
+	{{# }else  if(d.status == "REFUD_SUCCESS"){ }}
+	<span class="layui-bg-blue">退款成功</span>
+	{{# }else  if(d.status == "REFUD_FAIL"){ }}
+	<span class="layui-bg-red">退款失败付</span>
+	{{# }else if(d.status == "CANCEL_SUCCESS"){ }}
+	<span class="layui-bg-red">订单取消成功</span>
+	{{# }else if(d.status == "TRADE_SUCCESS"){ }}
+	<span class="layui-bg-red">支付成功</span>
+	{{# }else{ }}
+	{{# }}}
+	</script>
+	<!--操作-->
+	<script type="text/html" id="orderNo">
+		<a class="layui-btn layui-btn-xs" lay-event="close">取消订单</a>
+		<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="pay">去支付</a>
+	</script>
+	<script type="text/html" id="orderSuccess">
+		<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="refund">退款</a>
+	</script>
+</form>
+<script type="text/javascript" src="../libs/layui/layui.js"></script>
+
+<script>
+	layui.use(['form','layer','table','laytpl'],function() {
+		var form = layui.form,
+				layer = parent.layer === undefined ? layui.layer : top.layer,
+				$ = layui.jquery,
+				laytpl = layui.laytpl,
+				table = layui.table;
+
+		//订单列表
+		var tableIns = table.render({
+			elem: '#orderList',
+			url: 'http://localhost:8081/order/list',
+			cellMinWidth: 95,
+			parseData: function (res) { // 解析返回的数据
+				return {
+					code: res.code,
+					data: res.data.list,
+					count: res.data.total
+				};
+			},
+			page: true,
+			limits: [10, 15, 20, 25],
+			limit: 13,
+			request: {
+				pageName: 'pageNo', // 页码的参数名称，默认：page
+				limitName: 'pageSize' // 每页数据条数的参数名，默认：limit
+			},
+			id: "userListTable",
+			cols: [[
+				{field: 'id', title: 'ID', minWidth: 100, align: "center"},
+				{field: 'orderNo', title: '订单编号', minWidth: 350, align: 'center'},
+				{field: 'subject', title: '订单标题', align: 'center'},
+				{field: 'totalAmount', title: '订单金额', align: 'center'},
+				{
+					field: 'status', title: '支付状态', align: 'center', templet: function (d) {
+						return d.status == '0' ? '<font color=#6495ed>未支付</font>' :  '<font color=#006400>已支付</font>'
+					}
+				},
+				{title: '操作', minWidth: 175, fixed: "right", align: "center",templet: function (d) {
+						if (d.status == '0') {
+							return '<div id="orderNo"><a class="layui-btn layui-btn-xs" lay-event="close">取消订单</a>' +
+									'<a class="layui-btn layui-btn-xs layui-btn-danger" href="orderPay.html">去支付</a></div>';
+						} else {
+							return '<div id="orderSuccess">\t\t<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="refund">退款</a></div>';
+						}
+					}
+					}
+			]]
+		});
+
+		//列表操作
+		table.on('tool(newsList)',function (obj){
+			let layEvent = obj.event,
+					data = obj.data;
+
+			//判断事件 是否为关闭订单
+			if(layEvent == 'close'){
+				layer.confirm("是否确认取消订单?",function (index){
+					//声明请求路径
+					let url = "pay/closeTrade/"+data.orderNo;
+					//发送请求
+					$.post(url,function (data){
+						layer.msg(data.message);
+						tableIns.reload();
+						layer.close(index);
+					})
+				})
+			}
+
+			if(layEvent == 'refund'){ //退款操作
+				//退款的操作
+				layer.confirm("是否确认退款?",function (index){
+					let url = "pay/refund/"+data.orderNo;
+					$.post(url,function (data){
+						layer.msg(data.message);
+						tableIns.reload();
+						layer.close(index);
+					})
+				})
+			}
+		})
+	})
+</script>
+</body>
+</html>

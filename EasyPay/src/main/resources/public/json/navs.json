@@ -1,8 +1,0 @@
-[
-	{
-		"title": "订单管理",
-		"icon": "&#xe655;",
-		"href": "orderList",
-		"spread": false
-	}
-]

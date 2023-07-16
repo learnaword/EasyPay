@@ -1,0 +1,14 @@
+[
+	{
+		"title": "订单管理",
+		"icon": "&#xe655;",
+		"href": "page/orderList.html",
+		"spread": false
+	},
+	{
+		"title": "配置管理",
+		"icon": "&#xe655;",
+		"href": "../page/payConfig.html",
+		"spread": false
+	}
+]
