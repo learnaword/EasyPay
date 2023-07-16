@@ -7,6 +7,7 @@ import com.example.easypay.common.pojo.PageResult;
 import com.example.easypay.controller.order.vo.OrderPageReqVO;
 import com.example.easypay.dal.dataobject.OrderDO;
 import com.example.easypay.dal.mysql.OrderMapper;
+import com.example.easypay.enums.OrderStatusEnum;
 import com.example.easypay.service.OrderService;
 import com.example.easypay.utils.StringUtils;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,7 @@ public class OrderServiceImpl implements OrderService {
         order.setSubject("测试数据");
         order.setTotalAmount(1L);
         order.setDescription("这是测试订单");
+        order.setStatus(1);
         order.setCreateTime(new Timestamp(new Date().getTime()));
         order.setUpdateTime(new Timestamp(new Date().getTime()));
         orderMapper.insert(order);

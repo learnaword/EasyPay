@@ -1,5 +1,6 @@
 package com.example.easypay.controller.order.vo;
 
+import com.example.easypay.enums.OrderStatusEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -22,6 +23,13 @@ public class OrderPageRespVO{
 
     //商品描述
     private String description;
+
+    /**
+     * 订单状态
+     *
+     * 枚举{@link OrderStatusEnum}
+     */
+    private Integer status;
 
     //下单时间
     private Timestamp createTime;

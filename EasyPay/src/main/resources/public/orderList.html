@@ -33,8 +33,11 @@
 	{{# }}}
 	</script>
 	<!--操作-->
-	<script type="text/html" id="orderListBar">
+	<script type="text/html" id="orderNo">
 		<a class="layui-btn layui-btn-xs" lay-event="close">取消订单</a>
+		<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="pay">去支付</a>
+	</script>
+	<script type="text/html" id="orderSuccess">
 		<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="refund">退款</a>
 	</script>
 </form>
@@ -61,9 +64,8 @@
 				};
 			},
 			page: true,
-			height: "full-125",
 			limits: [10, 15, 20, 25],
-			limit: 20,
+			limit: 13,
 			request: {
 				pageName: 'pageNo', // 页码的参数名称，默认：page
 				limitName: 'pageSize' // 每页数据条数的参数名，默认：limit
@@ -75,11 +77,19 @@
 				{field: 'subject', title: '订单标题', align: 'center'},
 				{field: 'totalAmount', title: '订单金额', align: 'center'},
 				{
-					field: 'payType', title: '支付方式', align: 'center', templet: function (d) {
-						return d.payType == 'ZFB' ? '<font color=#6495ed>支付宝</font>' :  '<font color=#006400>微信</font>'
+					field: 'status', title: '支付状态', align: 'center', templet: function (d) {
+						return d.status == '0' ? '<font color=#6495ed>未支付</font>' :  '<font color=#006400>已支付</font>'
 					}
 				},
-				{title: '操作', minWidth: 175, templet: '#orderListBar', fixed: "right", align: "center"}
+				{title: '操作', minWidth: 175, fixed: "right", align: "center",templet: function (d) {
+						if (d.status == '0') {
+							return '<div id="orderNo"><a class="layui-btn layui-btn-xs" lay-event="close">取消订单</a>' +
+									'<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="pay">去支付</a></div>';
+						} else {
+							return '<div id="orderSuccess">\t\t<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="refund">退款</a></div>';
+						}
+					}
+					}
 			]]
 		});
 
@@ -92,7 +102,7 @@
 			if(layEvent == 'close'){
 				layer.confirm("是否确认取消订单?",function (index){
 					//声明请求路径
-					let url = "alipay/closeTrade/"+data.orderNo;
+					let url = "pay/closeTrade/"+data.orderNo;
 					//发送请求
 					$.post(url,function (data){
 						layer.msg(data.message);
@@ -100,10 +110,24 @@
 						layer.close(index);
 					})
 				})
-			}else  if(layEvent == 'refund'){ //退款操作
+			}
+
+			if(layEvent == 'refund'){ //退款操作
 				//退款的操作
 				layer.confirm("是否确认退款?",function (index){
-					let url = "alipay/refund/"+data.orderNo;
+					let url = "pay/refund/"+data.orderNo;
+					$.post(url,function (data){
+						layer.msg(data.message);
+						tableIns.reload();
+						layer.close(index);
+					})
+				})
+			}
+
+			if(layEvent == 'pay'){ //退款操作
+				//退款的操作
+				layer.confirm("去支付?",function (index){
+					let url = "pay/pay/"+data.orderNo;
 					$.post(url,function (data){
 						layer.msg(data.message);
 						tableIns.reload();
