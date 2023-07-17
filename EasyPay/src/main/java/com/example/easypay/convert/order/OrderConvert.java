@@ -9,7 +9,6 @@ import com.example.easypay.dal.dataobject.PayOrderDO;
 /**
  * 支付应用信息 Convert
  *
- * @author 芋艿
  */
 @Mapper
 public interface OrderConvert {

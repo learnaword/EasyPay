@@ -6,7 +6,6 @@ import lombok.Getter;
 /**
  * 支付订单的通知状态枚举
  *
- * @author 芋道源码
  */
 @Getter
 @AllArgsConstructor

@@ -1,4 +1,4 @@
-package com.example.easypay.controller.pay.vo;
+package com.example.easypay.controller.app.vo;
 
 import com.example.easypay.common.pojo.PageParam;
 import lombok.Data;
@@ -9,4 +9,5 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class PayAppPageReqVO extends PageParam {
+
 }

@@ -13,28 +13,7 @@
 	<link rel="stylesheet" href="../css/public.css" media="all" />
 </head>
 <body class="childrenBody">
-<form class="layui-form" id="dataFrm">
-	<table id="orderList" lay-filter="newsList"></table>
-	<!--审核状态-->
-	<script type="text/html" id="status">
-	{{# if(d.status == "WAIT_BUYER_PAY"){ }}
-	<span class="layui-bg-red">待支付</span>
-	{{# }else if(d.status == "TRADE_CLOSED"){ }}
-	<span class="layui-bg-gray">关闭订单</span>
-	{{# }else  if(d.status == "REFUD_SUCCESS"){ }}
-	<span class="layui-bg-blue">退款成功</span>
-	{{# }else  if(d.status == "REFUD_FAIL"){ }}
-	<span class="layui-bg-red">退款失败付</span>
-	{{# }else if(d.status == "CANCEL_SUCCESS"){ }}
-	<span class="layui-bg-red">订单取消成功</span>
-	{{# }else if(d.status == "TRADE_SUCCESS"){ }}
-	<span class="layui-bg-red">支付成功</span>
-	{{# }else{ }}
-	{{# }}}
-	</script>
-</form>
 <script type="text/javascript" src="../libs/layui/layui.js"></script>
-
 <script>
 	layui.use(['form','layer','table','laytpl'],function() {
 		var form = layui.form,
@@ -62,7 +41,6 @@
 				pageName: 'pageNo', // 页码的参数名称，默认：page
 				limitName: 'pageSize' // 每页数据条数的参数名，默认：limit
 			},
-			id: "userListTable",
 			cols: [[
 				{field: 'id', title: 'ID', minWidth: 100, align: "center"},
 				{field: 'orderNo', title: '订单编号', minWidth: 350, align: 'center'},
