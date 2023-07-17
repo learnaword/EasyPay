@@ -7,16 +7,14 @@ import com.example.easypay.enums.OrderStatusEnum;
 import lombok.*;
 import lombok.experimental.Accessors;
 
-import java.sql.Timestamp;
-
-@TableName("t_order")
+@TableName("pay_order")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class OrderDO extends BaseDO{
+public class PayOrderDO extends BaseDO{
     //商品id
     @TableId(value="id",type= IdType.AUTO)
     private Long id;

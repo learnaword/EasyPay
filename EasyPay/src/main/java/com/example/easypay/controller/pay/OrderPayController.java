@@ -24,4 +24,9 @@ public class OrderPayController {
     public CommonResult<Boolean> pay(){
         return success(true);
     }
+
+    @RequestMapping("callback")
+    public CommonResult<Boolean> callback(){
+        return success(true);
+    }
 }

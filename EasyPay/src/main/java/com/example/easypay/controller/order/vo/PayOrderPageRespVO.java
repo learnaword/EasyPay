@@ -2,15 +2,13 @@ package com.example.easypay.controller.order.vo;
 
 import com.example.easypay.enums.OrderStatusEnum;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Data
 @ToString(callSuper = true)
-public class OrderPageRespVO{
+public class PayOrderPageRespVO {
     private Long id;
 
     //商品标题

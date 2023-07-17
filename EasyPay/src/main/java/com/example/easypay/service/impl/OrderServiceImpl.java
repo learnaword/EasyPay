@@ -1,20 +1,14 @@
 package com.example.easypay.service.impl;
 import java.time.LocalDateTime;
-import java.util.Date;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.example.easypay.common.pojo.PageResult;
-import com.example.easypay.controller.order.vo.OrderPageReqVO;
-import com.example.easypay.dal.dataobject.OrderDO;
-import com.example.easypay.dal.mysql.OrderMapper;
+import com.example.easypay.controller.order.vo.PayOrderPageReqVO;
+import com.example.easypay.dal.dataobject.PayOrderDO;
+import com.example.easypay.dal.mysql.PayOrderMapper;
 import com.example.easypay.enums.OrderStatusEnum;
 import com.example.easypay.service.OrderService;
 import com.example.easypay.utils.StringUtils;
 import org.springframework.stereotype.Service;
-
-import java.sql.Timestamp;
-import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -22,11 +16,11 @@ import javax.annotation.Resource;
 public class OrderServiceImpl implements OrderService {
 
     @Resource
-    private OrderMapper orderMapper;
+    private PayOrderMapper orderMapper;
 
     @Override
     public void createOrder() {
-        OrderDO order = new OrderDO();
+        PayOrderDO order = new PayOrderDO();
         order.setOrderNo(StringUtils.createOrderNum());
         order.setSubject("测试数据");
         order.setTotalAmount(1L);
@@ -39,10 +33,10 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void cancelOrder(Long orderId) {
-        orderMapper.updateById(new OrderDO().setId(orderId).setStatus(OrderStatusEnum.CANCEL.getStatus()));
+        orderMapper.updateById(new PayOrderDO().setId(orderId).setStatus(OrderStatusEnum.CANCEL.getStatus()));
     }
 
-    public PageResult<OrderDO> getOrderPage(OrderPageReqVO orderPageReqVO){
+    public PageResult<PayOrderDO> getOrderPage(PayOrderPageReqVO orderPageReqVO){
         return orderMapper.selectPage(orderPageReqVO);
     }
 }

@@ -1,14 +1,10 @@
 package com.example.easypay.convert.order;
 
 import com.example.easypay.common.pojo.PageResult;
-import com.example.easypay.controller.order.vo.OrderPageRespVO;
+import com.example.easypay.controller.order.vo.PayOrderPageRespVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
-import com.example.easypay.dal.dataobject.OrderDO;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import com.example.easypay.dal.dataobject.PayOrderDO;
 
 /**
  * 支付应用信息 Convert
@@ -20,7 +16,7 @@ public interface OrderConvert {
 
     OrderConvert INSTANCE = Mappers.getMapper(OrderConvert.class);
 
-    PageResult<OrderPageRespVO> convertPage(PageResult<OrderDO> page);
+    PageResult<PayOrderPageRespVO> convertPage(PageResult<PayOrderDO> page);
 
 
 }

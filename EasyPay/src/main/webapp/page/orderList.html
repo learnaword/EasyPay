@@ -70,7 +70,13 @@
 				{field: 'totalAmount', title: '订单金额', align: 'center'},
 				{
 					field: 'status', title: '支付状态', align: 'center', templet: function (d) {
-						return d.status == '0' ? '<font color=#6495ed>未支付</font>' :  '<font color=#006400>已支付</font>'
+						if (d.status == '0') {
+							return '<font color=#6495ed>未支付</font>'
+						} else if (d.status == '1'){
+							return '<font color=#FF5722>已支付</font>'
+						} else if (d.status == '2') {
+							return '<font color=#8B8682>已取消</font>'
+						}
 					}
 				},
 				{title: '操作', minWidth: 175, fixed: "right", align: "center",templet: function (d) {
