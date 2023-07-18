@@ -12,10 +12,26 @@
 	<link rel="stylesheet" href="../libs/layui/css/layui.css" media="all" />
 	<link rel="stylesheet" href="../css/public.css" media="all" />
 	<script type="text/javascript" src="../libs/layui/layui.js"></script>
+	<script type="text/javascript" src="../js/jquery-3.5.1.min.js"></script>
 </head>
 <body class="childrenBody">
 <table class="layui-table" id="pay_config_table">
 </table>
+<div id="dataForm" class="layui-hide">
+	<div class="layui-form-item">
+		<label class="layui-form-label">code：</label>
+		<div class="layui-input-inline layui-input-wrap">
+			<input type="text" id="data-code" name="vercode" lay-verify="required" autocomplete="off" lay-affix="clear" class="layui-input">
+		</div>
+	</div>
+	<div class="layui-form-item">
+		<label class="layui-form-label">备注：</label>
+		<div class="layui-input-inline layui-input-wrap">
+			<input type="text" name="vercode" id="data-remark" lay-verify="required" autocomplete="off" lay-affix="clear" class="layui-input">
+		</div>
+	</div>
+</div>
+
 <script>
 	layui.use(['table'], function () {
 		var table = layui.table;
@@ -38,69 +54,105 @@
 				limitName: 'pageSize' // 每页数据条数的参数名，默认：limit
 			},
 			cols: [[
-				{ field: 'id', title: '应用编号', rowspan: 2 },
-				{ field: 'name', title: '应用昵称', rowspan: 2 },
-				{ field: 'status', title: '是否开启', rowspan: 2 },
-				{ field: 'notifyUrl',title: '支付回调地址', rowspan: 2 },
-				{ field: 'notifyRefundUrl', title: '退款回调地址', rowspan: 2 },
-				{ align: 'center', colspan: 3, title: '支付宝' },
-				{ align: 'center', colspan: 3, title: '微信' },
-				{ fixed: 'right', align: 'center', title: '操作', rowspan: 2, templet: function (d) {
-				       return '<button type="button" class="layui-btn layui-btn-xs layui-btn-normal">编辑</button>';
-		        }}
-			    ], [
-				{ field: 'alipayPC', align: 'center',title: 'PC支付' , templet: function (d) {
-					if(d.configCodes && d.configCodes.includes("alipay_pc")){
-						return '<button type="button" class="layui-btn layui-btn-xs">查看</button>\n';
-					}else{
-						return '<button type="button" class="layui-btn layui-btn-xs layui-btn-danger">未设置</button>';
+				{field: 'id', title: '应用编号', rowspan: 2},
+				{field: 'name', title: '应用昵称', rowspan: 2},
+				{field: 'status', title: '是否开启', rowspan: 2},
+				{field: 'notifyUrl', title: '支付回调地址', rowspan: 2},
+				{field: 'notifyRefundUrl', title: '退款回调地址', rowspan: 2},
+				{align: 'center', colspan: 3, title: '支付宝'},
+				{align: 'center', colspan: 3, title: '微信'},
+				{
+					fixed: 'right', align: 'center', title: '操作', rowspan: 2, templet: function (d) {
+						return '<button type="button" data-id="123" class="layui-btn layui-btn-xs layui-btn-normal">编辑</button>';
 					}
 				}
-				},
-				{ field: 'alipayFaceToFace', align: 'center',title: 'APP支付', templet: function (d) {
-						if(d.configCodes && d.configCodes.includes("alipay_app")){
-							return '<button type="button" class="layui-btn layui-btn-xs">查看</button>'
-						}else{
+			], [
+				{
+					field: 'alipayPC', align: 'center', title: 'PC支付', templet: function (d) {
+						if (d.configCodes && d.configCodes.includes("alipay_pc")) {
+							return '<button id="alipay_pc" data-id="'+d.id+'" type="button" class="layui-btn layui-btn-xs" lay-on="page">查看</button>\n';
+						} else {
 							return '<button type="button" class="layui-btn layui-btn-xs layui-btn-danger">未设置</button>';
 						}
 					}
-				} ,
-				{ field: 'alipayMobile', align: 'center',title: 'WAP支付', templet: function (d) {
-						if(d.configCodes && d.configCodes.includes("alipay_wap")){
+				},
+				{
+					field: 'alipayFaceToFace', align: 'center', title: 'APP支付', templet: function (d) {
+						if (d.configCodes && d.configCodes.includes("alipay_app")) {
+							return '<button id="alipay_app" type="button" data-id="'+d.id+'" class="layui-btn layui-btn-xs" lay-on="page">查看</button>'
+						} else {
+							return '<button type="button" class="layui-btn layui-btn-xs layui-btn-danger">未设置</button>';
+						}
+					}
+				},
+				{
+					field: 'alipayMobile', align: 'center', title: 'WAP支付', templet: function (d) {
+						if (d.configCodes && d.configCodes.includes("alipay_wap")) {
 							return '<button type="button" class="layui-btn layui-btn-xs">查看</button>';
-						}else{
+						} else {
 							return '<button type="button" class="layui-btn layui-btn-xs layui-btn-danger">未设置</button>';
 						}
 					}
-				} ,
-				{ field: 'wechatPC', align: 'center', title: 'PC支付' , templet: function (d) {
-						if(d.configCodes && d.configCodes.includes("wx_pc")){
+				},
+				{
+					field: 'wechatPC', align: 'center', title: 'PC支付', templet: function (d) {
+						if (d.configCodes && d.configCodes.includes("wx_pc")) {
 							return '<button type="button" class="layui-btn layui-btn-xs">查看</button>';
-						}else{
+						} else {
 							return '<button type="button" class="layui-btn layui-btn-xs layui-btn-danger">未设置</button>';
 						}
 					}
 				},
-				{ field: 'wechatFaceToFace',align: 'center', title: '面对面' , templet: function (d) {
-					if(d.configCodes && d.configCodes.includes("wx_qr")){
-						return '<button type="button" class="layui-btn layui-btn-xs">查看</button>';
-					}else{
-						return '<button type="button" class="layui-btn layui-btn-xs layui-btn-danger">未设置</button>';
+				{
+					field: 'wechatFaceToFace', align: 'center', title: '面对面', templet: function (d) {
+						if (d.configCodes && d.configCodes.includes("wx_qr")) {
+							return '<button type="button" class="layui-btn layui-btn-xs">查看</button>';
+						} else {
+							return '<button type="button" class="layui-btn layui-btn-xs layui-btn-danger">未设置</button>';
+						}
 					}
-				}
 				},
-				{ field: 'wechatMobile', align: 'center', title: 'WAP支付' , templet: function (d) {
-					if(d.configCodes && d.configCodes.includes("wx_wap")){
-						return '<button type="button" class="layui-btn layui-btn-xs">查看</button>';
-					}else{
-						return '<button type="button" class="layui-btn layui-btn-xs layui-btn-danger">未设置</button>';
+				{
+					field: 'wechatMobile', align: 'center', title: 'WAP支付', templet: function (d) {
+						if (d.configCodes && d.configCodes.includes("wx_wap")) {
+							return '<button type="button" class="layui-btn layui-btn-xs">查看</button>';
+						} else {
+							return '<button type="button" class="layui-btn layui-btn-xs layui-btn-danger">未设置</button>';
+						}
 					}
-				}
 				}
 			]]
 		});
-	});
 
+		var layer = layui.layer;
+		var util = layui.util;
+		var render='';
+		// 批量事件
+		util.on('lay-on', {
+			page: function(){
+				$('#dataForm').removeClass("layui-hide")
+				//通过id向后端传递数据
+				var appId = $(this).data('id');
+				var code = this.id;
+				let url = "/config/get?code="+ code + "&payAppId=" + appId;
+				$.get(url,function (data){
+
+					//数据渲染到html
+					$('#data-code').val(data.data.code)
+					$('#data-remark').val(data.data.remark)
+				})
+				// 页面层
+				layer.open({
+					type: 1,
+					content: $('#dataForm'),
+					fixed:true,
+					end: function(){
+						$('#dataForm').addClass("layui-hide")
+					}
+				});
+			},
+		})
+	})
 </script>
 </body>
 </html>
