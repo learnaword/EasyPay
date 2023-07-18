@@ -2,12 +2,15 @@ package com.example.easypay.controller.app.vo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.example.easypay.dal.dataobject.PayConfigDO;
 import com.example.easypay.enums.OrderStatusEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
 
 @Data
 @ToString(callSuper = true)
@@ -41,5 +44,10 @@ public class PayAppPageRespVO {
      * 备注
      */
     private String remark;
+
+    /**
+     * 对应的配置信息
+     */
+    private Set<String> configCodes;
 
 }

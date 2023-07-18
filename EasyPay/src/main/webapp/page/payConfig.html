@@ -26,7 +26,7 @@
 			parseData: function (res) { // 数据格式解析函数
 				return {
 					code: res.code,
-					count: res.total,
+					count: res.data.total,
 					data: res.data.list
 				};
 			},
@@ -45,17 +45,62 @@
 				{ field: 'notifyRefundUrl', title: '退款回调地址', rowspan: 2 },
 				{ align: 'center', colspan: 3, title: '支付宝' },
 				{ align: 'center', colspan: 3, title: '微信' },
-				{ fixed: 'right', align: 'center', toolbar: '#toolbarDemo', title: '操作', rowspan: 2 }
-			], [
-				{ field: 'alipayPC',title: 'PC' },
-				{ field: 'alipayFaceToFace', title: '面对面' },
-				{ field: 'alipayMobile', title: '手机支付' },
-				{ field: 'wechatPC', title: 'PC' },
-				{ field: 'wechatFaceToFace', title: '面对面' },
-				{ field: 'wechatMobile', title: '手机支付' }
+				{ fixed: 'right', align: 'center', title: '操作', rowspan: 2, templet: function (d) {
+				       return '<button type="button" class="layui-btn layui-btn-xs layui-btn-normal">编辑</button>';
+		        }}
+			    ], [
+				{ field: 'alipayPC', align: 'center',title: 'PC支付' , templet: function (d) {
+					if(d.configCodes && d.configCodes.includes("alipay_pc")){
+						return '<button type="button" class="layui-btn layui-btn-xs">查看</button>\n';
+					}else{
+						return '<button type="button" class="layui-btn layui-btn-xs layui-btn-danger">未设置</button>';
+					}
+				}
+				},
+				{ field: 'alipayFaceToFace', align: 'center',title: 'APP支付', templet: function (d) {
+						if(d.configCodes && d.configCodes.includes("alipay_app")){
+							return '<button type="button" class="layui-btn layui-btn-xs">查看</button>'
+						}else{
+							return '<button type="button" class="layui-btn layui-btn-xs layui-btn-danger">未设置</button>';
+						}
+					}
+				} ,
+				{ field: 'alipayMobile', align: 'center',title: 'WAP支付', templet: function (d) {
+						if(d.configCodes && d.configCodes.includes("alipay_wap")){
+							return '<button type="button" class="layui-btn layui-btn-xs">查看</button>';
+						}else{
+							return '<button type="button" class="layui-btn layui-btn-xs layui-btn-danger">未设置</button>';
+						}
+					}
+				} ,
+				{ field: 'wechatPC', align: 'center', title: 'PC支付' , templet: function (d) {
+						if(d.configCodes && d.configCodes.includes("wx_pc")){
+							return '<button type="button" class="layui-btn layui-btn-xs">查看</button>';
+						}else{
+							return '<button type="button" class="layui-btn layui-btn-xs layui-btn-danger">未设置</button>';
+						}
+					}
+				},
+				{ field: 'wechatFaceToFace',align: 'center', title: '面对面' , templet: function (d) {
+					if(d.configCodes && d.configCodes.includes("wx_qr")){
+						return '<button type="button" class="layui-btn layui-btn-xs">查看</button>';
+					}else{
+						return '<button type="button" class="layui-btn layui-btn-xs layui-btn-danger">未设置</button>';
+					}
+				}
+				},
+				{ field: 'wechatMobile', align: 'center', title: 'WAP支付' , templet: function (d) {
+					if(d.configCodes && d.configCodes.includes("wx_wap")){
+						return '<button type="button" class="layui-btn layui-btn-xs">查看</button>';
+					}else{
+						return '<button type="button" class="layui-btn layui-btn-xs layui-btn-danger">未设置</button>';
+					}
+				}
+				}
 			]]
 		});
 	});
+
 </script>
 </body>
 </html>
