@@ -3,6 +3,7 @@ package com.example.easypay.service.impl;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.ObjectUtil;
 import com.example.easypay.common.utils.JsonUtils;
+import com.example.easypay.controller.config.vo.CreatePayConfigReqVO;
 import com.example.easypay.controller.config.vo.UpdatePayConfigReqVO;
 import com.example.easypay.convert.config.PayConfigConvert;
 import com.example.easypay.core.client.PayClientConfig;
@@ -54,5 +55,15 @@ public class PayConfigServiceImpl implements PayConfigService {
         PayClientConfig config = JsonUtils.parseObject2(configStr, payClass);
 
         return config;
+    }
+
+    @Override
+    public void createPayConfig(CreatePayConfigReqVO createPayConfigReqVO) {
+
+        PayConfigDO payConfigDO = PayConfigConvert.INSTANCE.convert(createPayConfigReqVO);
+
+        payConfigDO.setConfig(parseConfig(createPayConfigReqVO.getCode(),createPayConfigReqVO.getConfig()));
+
+        System.out.println(payConfigMapper.insert(payConfigDO));
     }
 }

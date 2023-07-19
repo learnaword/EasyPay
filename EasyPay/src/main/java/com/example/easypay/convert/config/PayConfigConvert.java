@@ -1,5 +1,6 @@
 package com.example.easypay.convert.config;
 
+import com.example.easypay.controller.config.vo.CreatePayConfigReqVO;
 import com.example.easypay.controller.config.vo.UpdatePayConfigReqVO;
 import com.example.easypay.dal.dataobject.PayConfigDO;
 import org.mapstruct.Mapper;
@@ -12,4 +13,7 @@ public interface PayConfigConvert {
 
     @Mapping(target = "config",ignore = true)
     PayConfigDO convert(UpdatePayConfigReqVO bean);
+
+    @Mapping(target = "config",ignore = true)
+    PayConfigDO convert(CreatePayConfigReqVO bean);
 }

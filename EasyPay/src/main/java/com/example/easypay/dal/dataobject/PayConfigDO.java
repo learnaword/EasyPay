@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
  *
  * @TableName pay_config
  */
-@TableName(value ="pay_config")
+@TableName(value ="pay_config", autoResultMap = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

@@ -1,6 +1,7 @@
 package com.example.easypay.controller.config;
 
 import com.example.easypay.common.pojo.CommonResult;
+import com.example.easypay.controller.config.vo.CreatePayConfigReqVO;
 import com.example.easypay.controller.config.vo.UpdatePayConfigReqVO;
 import com.example.easypay.dal.dataobject.PayConfigDO;
 import com.example.easypay.service.impl.PayConfigServiceImpl;
@@ -25,18 +26,26 @@ public class PayConfigController {
         if( id != null ){
             payConfig = payConfigService.getPayConfig(id);
         }
+
         if(appId != null&&code != null){
             payConfig = payConfigService.getPayConfigByCodeAndPayAppid(code,appId);
         }
+
         return CommonResult.success(payConfig);
     }
 
     @RequestMapping("/update")
-    public CommonResult<PayConfigDO> updatePayConfig(UpdatePayConfigReqVO updatePayConfigReqVO){
-        System.out.println(updatePayConfigReqVO.toString());
+    public CommonResult<Boolean> updatePayConfig(UpdatePayConfigReqVO updatePayConfigReqVO){
         PayConfigDO payConfig = payConfigService.getPayConfig(111l);
 
         payConfigService.updatePayConfig(updatePayConfigReqVO);
-        return CommonResult.success(null);
+        return CommonResult.success(true);
+    }
+
+    @RequestMapping("/create")
+    public CommonResult<Boolean> createPayConfig(CreatePayConfigReqVO createPayConfigReqVO){
+
+        payConfigService.createPayConfig(createPayConfigReqVO);
+        return CommonResult.success(true);
     }
 }

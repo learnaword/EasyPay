@@ -9,13 +9,15 @@ import lombok.Getter;
 /**
  * 支付渠道的编码的枚举
  *
- * @author 芋道源码
  */
 @Getter
 @AllArgsConstructor
 public enum PayConfigEnum {
 
-    ALIPAY_PC("alipay_pc", "支付宝 PC 网站支付", AlipayPayClientConfig.class);
+    ALIPAY_PC("alipay_pc", "支付宝 PC 网站支付", AlipayPayClientConfig.class),
+    ALIPAY_WAP("alipay_wap", "支付宝 wap 支付", AlipayPayClientConfig.class),
+    ALIPAY_APP("alipay_app", "支付宝 APP 支付", AlipayPayClientConfig.class);
+
     /**
      * 编码
      *

@@ -30,8 +30,8 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label">状态：</label>
 			<div class="layui-input-block">
-				<input type="radio" name="status" value="0" title="关闭">
-				<input type="radio" name="status" value="1" title="开启" checked>
+				<input type="radio" name="status" value="0" title="关闭" checked>
+				<input type="radio" name="status" value="1" title="开启">
 			</div>
 		</div>
 		<div class="layui-form-item">
@@ -43,8 +43,8 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label">网关类型：</label>
 			<div class="layui-input-block">
+				<input type="radio" name="alipayConfig-serverUrl" value="沙箱" title="沙箱"checked>
 				<input type="radio" name="alipayConfig-serverUrl" value="线上" title="线上">
-				<input type="radio" name="alipayConfig-serverUrl" value="沙箱" title="沙箱" checked>
 			</div>
 		</div>
 		<div class="layui-form-item">
@@ -120,7 +120,7 @@
 						if (d.configCodes && d.configCodes.includes("alipay_pc")) {
 							return '<button id="alipay_pc" data-id="'+d.id+'" type="button" class="layui-btn layui-btn-xs" lay-on="page">查看</button>\n';
 						} else {
-							return '<button type="button" class="layui-btn layui-btn-xs layui-btn-danger">未设置</button>';
+							return '<button id="alipay_pc" type="button" class="layui-btn layui-btn-xs layui-btn-danger" lay-on="page">未设置</button>';
 						}
 					}
 				},
@@ -129,16 +129,16 @@
 						if (d.configCodes && d.configCodes.includes("alipay_app")) {
 							return '<button id="alipay_app" type="button" data-id="'+d.id+'" class="layui-btn layui-btn-xs" lay-on="page">查看</button>'
 						} else {
-							return '<button type="button" class="layui-btn layui-btn-xs layui-btn-danger">未设置</button>';
+							return '<button id="alipay_app" type="button" data-id="'+d.id+'"  class="layui-btn layui-btn-xs layui-btn-danger" lay-on="page">未设置</button>';
 						}
 					}
 				},
 				{
 					field: 'alipayMobile', align: 'center', title: 'WAP支付', templet: function (d) {
 						if (d.configCodes && d.configCodes.includes("alipay_wap")) {
-							return '<button type="button" class="layui-btn layui-btn-xs">查看</button>';
+							return '<button id="alipay_wap" data-id="'+d.id+'" type="button" class="layui-btn layui-btn-xs" lay-on="page">查看</button>';
 						} else {
-							return '<button type="button" class="layui-btn layui-btn-xs layui-btn-danger">未设置</button>';
+							return '<button id="alipay_wap" data-id="'+d.id+'" type="button" class="layui-btn layui-btn-xs layui-btn-danger" lay-on="page">未设置</button>';
 						}
 					}
 				},
@@ -178,27 +178,38 @@
 		var render='';
 		// 批量事件
 		util.on('lay-on', {
-			page: function(){
+			page: function() {
 				$('#aliPayTemplate').removeClass("layui-hide")
 				//通过id向后端传递数据
 				var appId = $(this).data('id');
 				var code = this.id;
-				let url = "/config/get?code="+ code + "&payAppId=" + appId;
-				$.get(url,function (data){
-					//数据渲染到html
-					renderAliConfig(data);
+
+				//点开编辑就渲染code和payAppId
+				$('input[name="code"]').val(code)
+				$('input[name="payAppId"]').val(appId)
+
+				let url = "/config/get?code=" + code + "&payAppId=" + appId;
+				$.get(url, function (data) {
+					if (data != null) {
+						//数据渲染到html
+						renderAliConfig(data);
+					}
 				});
-				// 页面层
+					// 页面层
 				layer.open({
 					type: 1,
 					area: ['620px', 'auto'],
 					content: $('#aliPayTemplate'),
-					fixed:true,
-					end: function(){
-						$('#aliPayTemplate').addClass("layui-hide")
+					fixed: true,
+					end: function () {
+						//对弹出层的内容进行初始化。
+						renderDefaultAliConfig();
+						$('#aliPayTemplate').addClass("layui-hide");
+						//刷新当前页面
+						location.reload();
 					}
 				});
-			},
+			}
 		})
 
 		function renderAliConfig(data){
@@ -207,6 +218,43 @@
 			$('input[name="code"]').val(data.data.code)
 			$('input[name="remark"]').val(data.data.remark)
 			$('input[name="status"][value="'+ data.data.status + '"]').prop('checked', true);
+			$('input[name="alipayConfig-appId"]').val(data.data.config.appId)
+			$('input[name="alipayConfig-signType"][value="'+ data.data.config.signType + '"]').prop('checked', true);
+			$('input[name="alipayConfig-mode"][value="'+data.data.config.mode + '"]').prop('checked', true),
+			$('input[name="alipayConfig-serverUrl"][value="' + data.data.config.serverUrl +'"]').prop('checked', true),
+			$('textarea[name="alipayConfig-privateKey"]').val(data.data.config.privateKey),
+			$('textarea[name="alipayConfig-alipayPublicKey"]').val(data.data.config.alipayPublicKey)
+			layui.form.render();
+		}
+
+		function renderDefaultAliConfig(){
+			var defaultFormData = {
+				id:  '',
+				payAppId:  '',
+				code:  '',
+				remark:  '',
+				status:  0,
+				config: {
+					appId: '',
+					signType: '',
+					mode: '',
+					serverUrl: '',
+					privateKey: '',
+					alipayPublicKey: ''
+				}
+			};
+
+			$('input[name="id"]').val(defaultFormData.id)
+			$('input[name="payAppId"]').val(defaultFormData.payAppId)
+			$('input[name="code"]').val(defaultFormData.code)
+			$('input[name="remark"]').val(defaultFormData.remark)
+			$('input[name="status"]:first').prop('checked', true);
+			$('input[name="alipayConfig-appId"]').val(defaultFormData.config.appId)
+			$('input[name="alipayConfig-signType"]:first').prop('checked', true);
+			$('input[name="alipayConfig-mode"]:first').prop('checked', true);
+			$('input[name="alipayConfig-serverUrl"]:first').prop('checked', true);
+			$('textarea[name="alipayConfig-privateKey"]').val(defaultFormData.config.privateKey),
+			$('textarea[name="alipayConfig-alipayPublicKey"]').val(defaultFormData.config.alipayPublicKey)
 			layui.form.render();
 		}
 
@@ -221,16 +269,22 @@
 					appId: $('input[name="alipayConfig-appId"]').val(),
 					signType: $('input[name="alipayConfig-signType"]:checked').val(),
 					mode: $('input[name="alipayConfig-mode"]:checked').val(),
-					serverUrl: $('input[name="alipayConfig-serverUrl"]').val(),
+					serverUrl: $('input[name="alipayConfig-serverUrl"]:checked').val(),
 					privateKey: $('textarea[name="alipayConfig-privateKey"]').val(),
 					alipayPublicKey: $('textarea[name="alipayConfig-alipayPublicKey"]').val()
 				})
 			};
+			var url = "/config/update";
+			var msg = "更新成功";
+			if (formData["id"] == ''){
+				url="/config/create"
+				msg = "创建成功";
+			}
 			$.post({
-				url: "/config/update",
+				url: url,
 				data: formData,
-				success: function(formData) {
-					alert(111);
+				success: function(data) {
+					alert(msg);
 				}
 			});
 		});
