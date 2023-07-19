@@ -1,5 +1,12 @@
 package com.example.easypay.service.impl;
 
+import cn.hutool.core.lang.Assert;
+import cn.hutool.core.util.ObjectUtil;
+import com.example.easypay.common.utils.JsonUtils;
+import com.example.easypay.controller.config.vo.UpdatePayConfigReqVO;
+import com.example.easypay.convert.config.PayConfigConvert;
+import com.example.easypay.core.client.PayClientConfig;
+import com.example.easypay.core.enums.PayConfigEnum;
 import com.example.easypay.dal.dataobject.PayConfigDO;
 import com.example.easypay.dal.mysql.PayConfigMapper;
 import com.example.easypay.service.PayConfigService;
@@ -28,5 +35,24 @@ public class PayConfigServiceImpl implements PayConfigService {
     @Override
     public PayConfigDO getPayConfig(Long id) {
         return payConfigMapper.selectById(id);
+    }
+    @Override
+    public void updatePayConfig(UpdatePayConfigReqVO updatePayConfigReqVO) {
+
+        PayConfigDO payConfigDO = PayConfigConvert.INSTANCE.convert(updatePayConfigReqVO);
+
+        payConfigDO.setConfig(parseConfig(updatePayConfigReqVO.getCode(),updatePayConfigReqVO.getConfig()));
+
+        payConfigMapper.updateById(payConfigDO);
+    }
+
+
+    private PayClientConfig parseConfig(String code, String configStr){
+        // 解析配置
+        Class<? extends PayClientConfig> payClass = PayConfigEnum.getByCode(code).getConfigClass();
+
+        PayClientConfig config = JsonUtils.parseObject2(configStr, payClass);
+
+        return config;
     }
 }

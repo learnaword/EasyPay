@@ -1,0 +1,52 @@
+<form class="layui-form" action="xxx">
+  <div class="layui-form-item">
+    <label class="layui-form-label">code：</label>
+    <div class="layui-input-inline layui-input-wrap">
+      <input type="text" id="data-code" value="{{ d.code }}" name="vercode" lay-verify="required" disabled autocomplete="off" lay-affix="clear" class="layui-input">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">状态：</label>
+    <div class="layui-input-block">
+      <input type="radio" name="data-status" value="0" title="关闭" checked>
+      <input type="radio" name="data-status" value="1" title="开启">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">算法类型：</label>
+    <div class="layui-input-block">
+      <input type="radio" name="data-algorithm" value="RSA2" title="RSA2" checked>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">网关类型：</label>
+    <div class="layui-input-block">
+      <input type="radio" name="data-gateway" value="线上" title="线上">
+      <input type="radio" name="data-gateway" value="沙箱" title="沙箱" checked>
+    </div>
+  </div>
+  <div class="layui-form-item layui-form-text">
+    <label class="layui-form-label">商户私钥：</label>
+    <div class="layui-input-block">
+      <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
+    </div>
+  </div>
+  <div class="layui-form-item layui-form-text">
+    <label class="layui-form-label">支付宝公钥：</label>
+    <div class="layui-input-block">
+      <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">备注：</label>
+    <div class="layui-input-inline layui-input-wrap">
+      <input type="text" name="vercode" id="data-remark" lay-verify="required" autocomplete="off" lay-affix="clear" class="layui-input">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+      <button type="submit" class="layui-btn" lay-submit lay-filter="demo1">立即提交</button>
+      <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+    </div>
+  </div>
+</form>

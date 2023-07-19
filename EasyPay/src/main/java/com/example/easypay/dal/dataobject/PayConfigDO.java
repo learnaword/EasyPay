@@ -4,10 +4,9 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
-import java.util.Date;
 
-import com.example.easypay.dal.dataobject.BaseDO;
+import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
+import com.example.easypay.core.client.PayClientConfig;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -52,5 +51,6 @@ public class PayConfigDO extends BaseDO {
     /**
      * 配置数据
      */
-    private String config;
+    @TableField(typeHandler = JacksonTypeHandler.class)
+    private PayClientConfig config;
 }

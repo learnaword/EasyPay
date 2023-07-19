@@ -15,73 +15,65 @@
 	<script type="text/javascript" src="../js/jquery-3.5.1.min.js"></script>
 </head>
 <body class="childrenBody">
-<table class="layui-table" id="pay_config_table"></table>
-<div id="aliPayTemplate" style="margin-right:15px;" class="layui-hide">
+<table class="layui-table" id="pay_config_table">
+</table>
+<div id="dataForm" class="layui-hide">
 	<form class="layui-form" action="xxx">
-		<input type="text" name="id" class="layui-hide"/>
-		<input type="text" name="payAppId" class="layui-hide"/>
-		<input type="text" name="code" class="layui-hide"/>
-		<div class="layui-form-item">
-			<label class="layui-form-label">平台appId：</label>
-			<div class="layui-input-block">
-				<input type="text" name="alipayConfig-appId" lay-verify="required" autocomplete="off" lay-affix="clear" class="layui-input">
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">状态：</label>
-			<div class="layui-input-block">
-				<input type="radio" name="status" value="0" title="关闭">
-				<input type="radio" name="status" value="1" title="开启" checked>
-			</div>
-		</div>
+	    <div class="layui-form-item">
+		   <label class="layui-form-label">code：</label>
+		    <div class="layui-input-inline layui-input-wrap">
+			    <input type="text" id="data-code" name="vercode" lay-verify="required" disabled autocomplete="off" lay-affix="clear" class="layui-input">
+		    </div>
+	    </div>
+	    <div class="layui-form-item">
+	    	<label class="layui-form-label">状态：</label>
+	    	<div class="layui-input-block">
+		    	<input type="radio" name="data-status" value="0" title="关闭" checked>
+		    	<input type="radio" name="data-status" value="1" title="开启">
+		    </div>
+	    </div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">算法类型：</label>
 			<div class="layui-input-block">
-				<input type="radio" name="alipayConfig-signType" value="RSA2" title="RSA2" checked>
+				<input type="radio" name="data-algorithm" value="RSA2" title="RSA2" checked>
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">网关类型：</label>
 			<div class="layui-input-block">
-				<input type="radio" name="alipayConfig-serverUrl" value="线上" title="线上">
-				<input type="radio" name="alipayConfig-serverUrl" value="沙箱" title="沙箱" checked>
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">公钥类型：</label>
-			<div class="layui-input-block">
-				<input type="radio" name="alipayConfig-mode" value="1" title="公钥模式" checked>
-				<input type="radio" name="alipayConfig-mode" value='2' title="证书模式">
+				<input type="radio" name="data-gateway" value="xianshangdizzhi" title="线上">
+				<input type="radio" name="data-gateway" value="shaxiangdizhi" title="沙箱" checked>
 			</div>
 		</div>
 		<div class="layui-form-item layui-form-text">
 			<label class="layui-form-label">商户私钥：</label>
 			<div class="layui-input-block">
-				<textarea name="alipayConfig-privateKey" placeholder="请输入内容" class="layui-textarea"></textarea>
+				<textarea placeholder="请输入内容" class="layui-textarea"></textarea>
 			</div>
 		</div>
 		<div class="layui-form-item layui-form-text">
 			<label class="layui-form-label">支付宝公钥：</label>
 			<div class="layui-input-block">
-				<textarea name="alipayConfig-alipayPublicKey" placeholder="请输入内容" class="layui-textarea"></textarea>
+				<textarea placeholder="请输入内容" class="layui-textarea"></textarea>
 			</div>
 		</div>
+	    <div class="layui-form-item">
+		    <label class="layui-form-label">备注：</label>
+		    <div class="layui-input-inline layui-input-wrap">
+		    	<input type="text" name="vercode" id="data-remark" lay-verify="required" autocomplete="off" lay-affix="clear" class="layui-input">
+		    </div>
+	    </div>
 		<div class="layui-form-item">
-			<label class="layui-form-label">备注：</label>
 			<div class="layui-input-block">
-				<input type="text" name="remark" id="data-remark" lay-verify="required" autocomplete="off" lay-affix="clear" class="layui-input">
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<div class="layui-input-block">
-				<button type="button" class="layui-btn" id="submit_btn">立即提交</button>
+				<button type="submit" class="layui-btn" lay-submit lay-filter="demo1">立即提交</button>
 				<button type="reset" class="layui-btn layui-btn-primary">重置</button>
 			</div>
 		</div>
 	</form>
 </div>
+
 <script>
-	layui.use(['table','laytpl'], function () {
+	layui.use(['table'], function () {
 		var table = layui.table;
 		table.render({
 			elem: '#pay_config_table',
@@ -174,66 +166,36 @@
 
 		var layer = layui.layer;
 		var util = layui.util;
-		var laytpl = layui.laytpl;
 		var render='';
 		// 批量事件
 		util.on('lay-on', {
 			page: function(){
-				$('#aliPayTemplate').removeClass("layui-hide")
+				$('#dataForm').removeClass("layui-hide")
 				//通过id向后端传递数据
 				var appId = $(this).data('id');
 				var code = this.id;
 				let url = "/config/get?code="+ code + "&payAppId=" + appId;
 				$.get(url,function (data){
+
 					//数据渲染到html
-					renderAliConfig(data);
+					$('#data-code').val(data.data.code)
+					$('#data-remark').val(data.data.remark)
+					$('input[name="data-status"][value="'+ data.data.status + '"]').prop('checked', true);
+					layui.form.render();
+
 				});
 				// 页面层
 				layer.open({
 					type: 1,
-					area: ['620px', 'auto'],
-					content: $('#aliPayTemplate'),
+					area: ['520px', 'auto'],
+					content: $('#dataForm'),
 					fixed:true,
 					end: function(){
-						$('#aliPayTemplate').addClass("layui-hide")
+						$('#dataForm').addClass("layui-hide")
 					}
 				});
 			},
 		})
-
-		function renderAliConfig(data){
-			$('input[name="id"]').val(data.data.id)
-			$('input[name="payAppId"]').val(data.data.payAppId)
-			$('input[name="code"]').val(data.data.code)
-			$('input[name="remark"]').val(data.data.remark)
-			$('input[name="status"][value="'+ data.data.status + '"]').prop('checked', true);
-			layui.form.render();
-		}
-
-		$('#submit_btn').on('click',function () {
-			var formData = {
-				id:  $('input[name="id"]').val(),
-				payAppId:  $('input[name="payAppId"]').val(),
-				code:  $('input[name="code"]').val(),
-				remark:  $('input[name="remark"]').val(),
-				status:  $('input[name="status"]:checked').val(),
-                config: JSON.stringify({
-					appId: $('input[name="alipayConfig-appId"]').val(),
-					signType: $('input[name="alipayConfig-signType"]:checked').val(),
-					mode: $('input[name="alipayConfig-mode"]:checked').val(),
-					serverUrl: $('input[name="alipayConfig-serverUrl"]').val(),
-					privateKey: $('textarea[name="alipayConfig-privateKey"]').val(),
-					alipayPublicKey: $('textarea[name="alipayConfig-alipayPublicKey"]').val()
-				})
-			};
-			$.post({
-				url: "/config/update",
-				data: formData,
-				success: function(formData) {
-					alert(111);
-				}
-			});
-		});
 	})
 </script>
 </body>
