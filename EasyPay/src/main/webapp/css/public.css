@@ -1,4 +1,42 @@
 /*公共样式*/
+/* 自定义CSS样式，添加边框和间距 */
+.custom-div {
+    border: 1px solid #e7e6e6;
+    padding: 10px; /* 设置间距 */
+}
+
+/* 限制每个自定义div的宽度，可以根据需要调整 */
+.custom-div {
+    width: calc(15% - 20px); /* 33.33%表示三列，20px是两个边框的总宽度 */
+    float: left;
+    margin-right: 20px; /* 设置列间距 */
+    box-sizing: border-box; /* 计算宽度时包含边框和内边距 */
+}
+
+/* 清除最后一列的margin-right，使最后一列与父容器对齐 */
+.custom-div:last-child {
+    margin-right: 0;
+}
+
+/* 图片和文字居中显示 */
+.custom-div img,
+.custom-div p {
+    text-align: center;
+}
+
+.custom-div img{
+    height:44px;
+    width:40px;
+}
+
+.custom-div:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+/* 移除链接的下划线 */
+.custom-div a {
+    text-decoration: none;
+}
 .cancel_btn{background-color: #8B8682}
 .childrenBody{ padding:10px;}
 .layui-table-view{ margin:0 !important;}

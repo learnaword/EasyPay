@@ -4,7 +4,7 @@
 	@Description: 点击对应按钮添加新窗口
 */
 var tabFilter,menu=[],liIndex,curNav,delMenu,
-    changeRefreshStr = window.sessionStorage.getItem("changeRefresh");
+    changeRefreshStr = window.sessionStorage.getItem("changeRefreshStr");
 layui.define(["element","jquery"],function(exports){
 	var element = layui.element,
 		$ = layui.$,

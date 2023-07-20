@@ -14,111 +14,127 @@
 	<script type="text/javascript" src="../libs/layui/layui.js"></script>
 	<script type="text/javascript" src="../js/jquery-3.5.1.min.js"></script>
 </head>
-<body class="childrenBody">
-<div class="layui-btn-container">
-	<button type="button" class="layui-btn layui-btn-primary" lay-on="alert">Alert</button>
-	<button type="button" class="layui-btn layui-btn-primary" lay-on="confirm">Confirm</button>
-	<button type="button" class="layui-btn layui-btn-primary" lay-on="msg">Msg</button>
-	<button type="button" class="layui-btn layui-btn-primary" lay-on="page">Page</button>
-	<button type="button" class="layui-btn layui-btn-primary" lay-on="iframe">Iframe</button>
-	<button type="button" class="layui-btn layui-btn-primary" lay-on="load">Load</button>
-	<button type="button" class="layui-btn layui-btn-primary" lay-on="tips">Tips</button>
-	<button type="button" class="layui-btn layui-btn-primary" lay-on="prompt">Prompt</button>
-	<button type="button" class="layui-btn layui-btn-primary" lay-on="photots">Photots</button>
+<body>
+<div class="layui-bg-gray" style="padding: 16px;">
+	<div class="layui-row layui-col-space15">
+		<div class="layui-col-md12">
+			<div class="layui-card">
+				<div class="layui-card-header">商品信息</div>
+				<div class="layui-card-body">
+					<table class="layui-table">
+						<colgroup>
+							<col width="100">
+							<col width="200">
+							<col width="100">
+							<col width="200">
+							<col width="100">
+							<col width="200">
+						</colgroup>
+						<thead>
+						<tr>
+							<th>订单号</th>
+							<td id="orderNo"></td>
+							<th>标题</th>
+							<td id="subject"></td>
+							<th>商品描述</th>
+							<td id="description"></td>
+						</tr>
+						</thead>
+						<tbody>
+						<tr>
+							<th>总金额</th>
+							<td id="totalAmount"></td>
+							<th>创建时间</th>
+							<td id="createTime"></td>
+							<th>过期时间</th>
+							<td>暂时没加这个逻辑</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="layui-col-md12">
+			<div class="layui-card" style="padding:10px;">
+				<div class="layui-card-header">选择支付宝支付方式</div>
+				<div class="layui-card-body" style="height:80px;">
+					<div class="layui-center custom-div">
+						<a href="your_alipay_link">
+							<img src="../img/pay/icon/alipay_pc.svg" alt="支付宝" style="max-width: 100%;">
+							<p>支付宝支付方式</p>
+						</a>
+					</div>
+					<div class="layui-center custom-div">
+						<a href="your_alipay_link">
+							<img src="../img/pay/icon/alipay_app.svg" alt="支付宝" style="max-width: 100%;">
+							<p>支付宝APP支付</p>
+						</a>
+					</div>
+					<div class="layui-center custom-div">
+						<a href="your_alipay_link">
+							<img src="../img/pay/icon/alipay_qr.svg" alt="支付宝" style="max-width: 100%;">
+							<p>支付宝扫码支付</p>
+						</a>
+					</div>
+					<div class="layui-center custom-div">
+						<a href="your_alipay_link">
+							<img src="../img/pay/icon/alipay_wap.svg" alt="支付宝" style="max-width: 100%;">
+							<p>支付宝WAP网站支付</p>
+						</a>
+					</div>
+					<div class="layui-center custom-div">
+						<a href="your_alipay_link">
+							<img src="../img/pay/icon/alipay_bar.svg" alt="支付宝" style="max-width: 100%;">
+							<p>支付宝条形码支付</p>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="layui-col-md12">
+			<div class="layui-card" style="padding:10px;">
+				<div class="layui-card-header">选择微信支付方式</div>
+				<div class="layui-card-body" style="height:80px;">
+					<div class="layui-center custom-div">
+						<a href="your_alipay_link">
+							<img src="../img/pay/icon/wx_app.svg" alt="微信" style="max-width: 100%;">
+							<p>微信app支付</p>
+						</a>
+					</div>
+					<div class="layui-center custom-div">
+						<a href="your_alipay_link">
+						    <img src="../img/pay/icon/wx_lite.svg" alt="微信" style="max-width: 100%;">
+						    <p>微信小程序支付</p>
+						</a>
+					</div>
+					<div class="layui-center custom-div">
+						<a href="your_alipay_link">
+							<img src="../img/pay/icon/wx_pub.svg" alt="微信" style="max-width: 100%;">
+							<p>微信JSPAI支付</p>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
-<div id="myElement">This is the content to be captured</div>
-
-<div id="textDIV">1111111</div>
 <script>
-	layui.use(function(){
-		var layer = layui.layer;
-		var util = layui.util;
-		// 批量事件
-		util.on('lay-on', {
-			alert: function(){
-				layer.alert('对话框内容');
-			},
-			confirm: function(){
-				layer.confirm('一个询问框的示例？', {
-					btn: ['确定', '关闭'] //按钮
-				}, function(){
-					layer.msg('第一个回调', {icon: 1});
-				}, function(){
-					layer.msg('第二个回调', {
-						time: 20000, // 20s 后自动关闭
-						btn: ['明白了', '知道了']
-					});
-				});
-			},
-			msg: function(){
-				layer.msg('一段提示信息');
-			},
-			page: function(){
-				// 页面层
-				layer.open({
-					type: 1,
-					area: ['420px', '240px'], // 宽高
-					content: $('#myElement')
-				});
-			},
-			iframe: function(){
-				// iframe 层
-				layer.open({
-					type: 2,
-					title: 'iframe test',
-					shadeClose: true,
-					shade: 0.8,
-					area: ['380px', '80%'],
-					content: '/layer/test/1.html' // iframe 的 url
-				});
-			},
-			load: function(){
-				var index = layer.load(0, {shade: false});
-				setTimeout(function(){
-					layer.close(index); // 关闭 loading
-				}, 5000);
-			},
-			tips: function(){
-				layer.tips('一个 tips 层', this, {
-					tips: 1
-				});
-			},
-			prompt: function(){
-				layer.prompt({title: '密令输入框', formType: 1}, function(pass, index){
-					layer.close(index);
-					layer.prompt({title: '文本输入框', formType: 2}, function(text, index){
-						layer.close(index);
-						alert('您输入的密令：'+ pass +'；文本：'+ text);
-					});
-				});
-			},
-			photots: function(){
-				layer.photos({
-					photos: {
-						"title": "Photos Demo",
-						"start": 0,
-						"data": [
-							{
-								"alt": "layer",
-								"pid": 1,
-								"src": "https://unpkg.com/outeres/demo/layer.png",
-							},
-							{
-								"alt": "壁纸",
-								"pid": 3,
-								"src": "https://unpkg.com/outeres/demo/000.jpg",
-							},
-							{
-								"alt": "浩瀚宇宙",
-								"pid": 5,
-								"src": "https://unpkg.com/outeres/demo/outer-space.jpg",
-							}
-						]
-					}
-				});
-			}
-		});
-	});
+	function getURLParameter(name) {
+		const urlParams = new URLSearchParams(window.location.search);
+		return urlParams.get(name);
+	}
+	const orderId = getURLParameter('orderId');
+	let url = "/order/get?orderId="+orderId;
+	$.post(url,function(data) {
+
+		//渲染图表
+		$("#orderNo").text(data.data.orderNo);
+		$("#subject").text(data.data.subject);
+		$("#description").text(data.data.description);
+		$("#totalAmount").text(data.data.totalAmount);
+		$("#createTime").text(data.data.createTime);
+		$("#expire_time").text(data.data.expire_time);
+	})
 </script>
 </body>
 </html>

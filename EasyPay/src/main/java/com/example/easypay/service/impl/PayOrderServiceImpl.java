@@ -6,14 +6,14 @@ import com.example.easypay.controller.order.vo.PayOrderPageReqVO;
 import com.example.easypay.dal.dataobject.PayOrderDO;
 import com.example.easypay.dal.mysql.PayOrderMapper;
 import com.example.easypay.enums.OrderStatusEnum;
-import com.example.easypay.service.OrderService;
+import com.example.easypay.service.PayOrderService;
 import com.example.easypay.utils.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
 @Service
-public class OrderServiceImpl implements OrderService {
+public class PayOrderServiceImpl implements PayOrderService {
 
     @Resource
     private PayOrderMapper orderMapper;
@@ -38,5 +38,9 @@ public class OrderServiceImpl implements OrderService {
 
     public PageResult<PayOrderDO> getOrderPage(PayOrderPageReqVO orderPageReqVO){
         return orderMapper.selectPage(orderPageReqVO);
+    }
+
+    public PayOrderDO getOrderById(Long orderId) {
+        return orderMapper.selectOne(PayOrderDO::getId,orderId);
     }
 }

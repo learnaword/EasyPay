@@ -62,7 +62,7 @@
 				{title: '操作', minWidth: 175, fixed: "right", align: "center",templet: function (d) {
 						if (d.status == '0') {
 							return '<div id="orderNo"><a class="layui-btn layui-btn-xs" lay-event="close">取消订单</a>' +
-									'<a class="layui-btn layui-btn-xs layui-btn-danger" href="orderPay.html">去支付</a></div>';
+									'<a class="layui-btn layui-btn-xs layui-btn-danger" href="orderPay.html?orderId=' + d.id+'">去支付</a></div>';
 						} else if (d.status == '1'){
 							return '<div id="orderSuccess">\t\t<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="refund">退款</a></div>';
 						} else if (d.status == '2') {
