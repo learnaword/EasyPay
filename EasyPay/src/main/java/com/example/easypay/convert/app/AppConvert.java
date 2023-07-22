@@ -25,7 +25,7 @@ public interface AppConvert {
    default PageResult<PayAppPageRespVO> convertPage(PageResult<PayAppDO> page, List<PayConfigDO> payConfigs){
         PageResult<PayAppPageRespVO> voPageResult = convertPage(page);
         // 处理 channel 关系
-        Map<Long, Set<String>> appIdConfigsMap = CollectionUtils.convertMultiMap2(payConfigs, PayConfigDO::getPayAppId, PayConfigDO::getCode);
+        Map<Long, Set<String>> appIdConfigsMap = CollectionUtils.convertMultiMap2(payConfigs, PayConfigDO::getPayAppid, PayConfigDO::getCode);
         voPageResult.getList().forEach(app -> app.setConfigCodes(appIdConfigsMap.get(app.getId())));
         return voPageResult;
     }

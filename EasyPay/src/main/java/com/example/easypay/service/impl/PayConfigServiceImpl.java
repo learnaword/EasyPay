@@ -1,7 +1,5 @@
 package com.example.easypay.service.impl;
 
-import cn.hutool.core.lang.Assert;
-import cn.hutool.core.util.ObjectUtil;
 import com.example.easypay.common.utils.JsonUtils;
 import com.example.easypay.controller.config.vo.CreatePayConfigReqVO;
 import com.example.easypay.controller.config.vo.UpdatePayConfigReqVO;
@@ -27,10 +25,10 @@ public class PayConfigServiceImpl implements PayConfigService {
         return payConfigMapper.selectListByAppIds(appIds);
     }
     @Override
-    public PayConfigDO getPayConfigByCodeAndPayAppid(String code,Long payAppid) {
+    public PayConfigDO getPayConfigByCodeAndpayAppid(String code,Long payAppid) {
         return payConfigMapper.selectOne(
                 PayConfigDO::getCode,code,
-                PayConfigDO::getPayAppId,payAppid
+                PayConfigDO::getPayAppid,payAppid
         );
     }
     @Override

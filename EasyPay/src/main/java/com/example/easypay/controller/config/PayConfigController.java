@@ -20,7 +20,7 @@ public class PayConfigController {
 
     @RequestMapping("/get")
     public CommonResult<PayConfigDO> getPayConfig(@RequestParam(value = "id", required = false) Long id,
-                                                  @RequestParam(value = "payAppId", required = false) Long appId,
+                                                  @RequestParam(value = "payAppid", required = false) Long appId,
                                                   @RequestParam(value = "code", required = false) String code){
         PayConfigDO payConfig = null;
         if( id != null ){
@@ -28,7 +28,7 @@ public class PayConfigController {
         }
 
         if(appId != null&&code != null){
-            payConfig = payConfigService.getPayConfigByCodeAndPayAppid(code,appId);
+            payConfig = payConfigService.getPayConfigByCodeAndpayAppid(code,appId);
         }
 
         return CommonResult.success(payConfig);

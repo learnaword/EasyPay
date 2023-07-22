@@ -4,7 +4,7 @@ import com.example.easypay.core.client.PayClientConfig;
 import lombok.Data;
 
 @Data
-public class AlipayPayClientConfig extends PayClientConfig {
+public class AlipayPayClientConfig implements PayClientConfig {
 
     /**
      * 公钥类型 - 公钥模式

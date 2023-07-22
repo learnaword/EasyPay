@@ -19,6 +19,9 @@ public class PayOrderDO extends BaseDO{
     @TableId(value="id",type= IdType.AUTO)
     private Long id;
 
+    //app_id，订单来源
+    private Long payAppid;
+
     //商品标题
     private String subject;
 
@@ -26,7 +29,7 @@ public class PayOrderDO extends BaseDO{
     private String orderNo;
 
     //订单金额
-    private Long totalAmount;
+    private Integer totalAmount;
 
     //商品描述
     private String description;

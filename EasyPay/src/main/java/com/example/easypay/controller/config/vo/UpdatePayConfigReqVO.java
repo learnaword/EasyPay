@@ -20,7 +20,7 @@ public class UpdatePayConfigReqVO {
     /**
      * 与pay_app进行关联
      */
-    private Long payAppId;
+    private Long payAppid;
 
     /**
      * 描述

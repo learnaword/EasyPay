@@ -19,7 +19,7 @@
 <div id="aliPayTemplate" style="margin-right:15px;" class="layui-hide">
 	<form class="layui-form" action="xxx">
 		<input type="text" name="id" class="layui-hide"/>
-		<input type="text" name="payAppId" class="layui-hide"/>
+		<input type="text" name="payAppid" class="layui-hide"/>
 		<input type="text" name="code" class="layui-hide"/>
 		<div class="layui-form-item">
 			<label class="layui-form-label">平台appId：</label>
@@ -43,15 +43,15 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label">网关类型：</label>
 			<div class="layui-input-block">
-				<input type="radio" name="alipayConfig-serverUrl" value="沙箱" title="沙箱"checked>
-				<input type="radio" name="alipayConfig-serverUrl" value="线上" title="线上">
+				<input type="radio" name="alipayConfig-serverUrl" value="https://openapi-sandbox.dl.alipaydev.com/gateway.do" title="沙箱"checked>
+				<!--<input type="radio" name="alipayConfig-serverUrl" value="线上" title="线上">-->
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">公钥类型：</label>
 			<div class="layui-input-block">
 				<input type="radio" name="alipayConfig-mode" value="1" title="公钥模式" checked>
-				<input type="radio" name="alipayConfig-mode" value='2' title="证书模式">
+				<!--<input type="radio" name="alipayConfig-mode" value='2' title="证书模式">-->
 			</div>
 		</div>
 		<div class="layui-form-item layui-form-text">
@@ -184,11 +184,11 @@
 				var appId = $(this).data('id');
 				var code = this.id;
 
-				//点开编辑就渲染code和payAppId
+				//点开编辑就渲染code和payAppid
 				$('input[name="code"]').val(code)
-				$('input[name="payAppId"]').val(appId)
+				$('input[name="payAppid"]').val(appId)
 
-				let url = "/config/get?code=" + code + "&payAppId=" + appId;
+				let url = "/config/get?code=" + code + "&payAppid=" + appId;
 				$.get(url, function (data) {
 					if (data != null) {
 						//数据渲染到html
@@ -214,7 +214,7 @@
 
 		function renderAliConfig(data){
 			$('input[name="id"]').val(data.data.id)
-			$('input[name="payAppId"]').val(data.data.payAppId)
+			$('input[name="payAppid"]').val(data.data.payAppid)
 			$('input[name="code"]').val(data.data.code)
 			$('input[name="remark"]').val(data.data.remark)
 			$('input[name="status"][value="'+ data.data.status + '"]').prop('checked', true);
@@ -230,7 +230,7 @@
 		function renderDefaultAliConfig(){
 			var defaultFormData = {
 				id:  '',
-				payAppId:  '',
+				payAppid:  '',
 				code:  '',
 				remark:  '',
 				status:  0,
@@ -245,7 +245,7 @@
 			};
 
 			$('input[name="id"]').val(defaultFormData.id)
-			$('input[name="payAppId"]').val(defaultFormData.payAppId)
+			$('input[name="payAppid"]').val(defaultFormData.payAppid)
 			$('input[name="code"]').val(defaultFormData.code)
 			$('input[name="remark"]').val(defaultFormData.remark)
 			$('input[name="status"]:first').prop('checked', true);
@@ -261,7 +261,7 @@
 		$('#submit_btn').on('click',function () {
 			var formData = {
 				id:  $('input[name="id"]').val(),
-				payAppId:  $('input[name="payAppId"]').val(),
+				payAppid:  $('input[name="payAppid"]').val(),
 				code:  $('input[name="code"]').val(),
 				remark:  $('input[name="remark"]').val(),
 				status:  $('input[name="status"]:checked').val(),

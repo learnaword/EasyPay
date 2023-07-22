@@ -23,7 +23,7 @@ public class PayOrderServiceImpl implements PayOrderService {
         PayOrderDO order = new PayOrderDO();
         order.setOrderNo(StringUtils.createOrderNum());
         order.setSubject("测试数据");
-        order.setTotalAmount(1L);
+        order.setTotalAmount(1);
         order.setDescription("这是测试订单");
         order.setStatus(OrderStatusEnum.NO.getStatus());
         order.setCreateTime(LocalDateTime.now());

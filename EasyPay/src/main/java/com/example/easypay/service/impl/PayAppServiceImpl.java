@@ -18,4 +18,9 @@ public class PayAppServiceImpl implements PayAppService {
     public PageResult<PayAppDO> getPayAppPage(PayAppPageReqVO payAppPageReqVO) {
         return payAppMapper.selectPage(payAppPageReqVO);
     }
+
+    @Override
+    public PayAppDO getPayAppById(Long payAppid) {
+        return payAppMapper.selectById(payAppid);
+    }
 }

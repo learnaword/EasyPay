@@ -6,4 +6,6 @@ import com.example.easypay.dal.dataobject.PayAppDO;
 
 public interface PayAppService {
     PageResult<PayAppDO> getPayAppPage(PayAppPageReqVO payAppPageReqVO);
+
+    PayAppDO getPayAppById(Long payAppid);
 }

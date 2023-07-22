@@ -10,7 +10,7 @@ import java.util.List;
 public interface PayConfigService {
     List<PayConfigDO> getAppConfigListByAppIds(Collection<Long> appIds);
 
-    public PayConfigDO getPayConfigByCodeAndPayAppid(String code, Long payAppid);
+    public PayConfigDO getPayConfigByCodeAndpayAppid(String code, Long payAppid);
 
     public PayConfigDO getPayConfig(Long id);
 

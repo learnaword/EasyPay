@@ -18,6 +18,6 @@ public interface PayConfigMapper extends BaseMapperX<PayConfigDO> {
     }
 
     default List<PayConfigDO> selectListByAppIds(Collection<Long> appIds){
-        return selectList(PayConfigDO::getPayAppId, appIds);
+        return selectList(PayConfigDO::getPayAppid, appIds);
     }
 }

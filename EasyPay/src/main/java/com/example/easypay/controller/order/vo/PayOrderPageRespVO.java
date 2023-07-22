@@ -14,11 +14,14 @@ public class PayOrderPageRespVO {
     //商品标题
     private String subject;
 
+    //商品标题
+    private Long payAppid;
+
     //订单编号
     private String orderNo;
 
     //订单金额
-    private Long totalAmount;
+    private Integer totalAmount;
 
     //商品描述
     private String description;

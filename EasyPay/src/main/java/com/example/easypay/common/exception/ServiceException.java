@@ -16,6 +16,7 @@ public final class ServiceException extends RuntimeException {
      * @see ServiceErrorCodeRange
      */
     private Integer code;
+
     /**
      * 错误提示
      */
