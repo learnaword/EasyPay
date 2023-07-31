@@ -45,7 +45,6 @@ public class PayAppController {
         List<PayConfigDO> payAppConfigs= payAppConfigService.getAppConfigListByAppIds(appIds);
 
 
-
         return success(AppConvert.INSTANCE.convertPage(pageResult, payAppConfigs));
     }
 

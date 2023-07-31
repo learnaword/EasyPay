@@ -1,7 +1,11 @@
 package com.example.easypay.core.client.alipay;
 
 import com.example.easypay.core.client.PayClientConfig;
+import com.example.easypay.utils.ValidationUtils;
 import lombok.Data;
+
+import javax.validation.Validator;
+import javax.validation.constraints.NotNull;
 
 @Data
 public class AlipayPayClientConfig implements PayClientConfig {
@@ -32,6 +36,7 @@ public class AlipayPayClientConfig implements PayClientConfig {
     /**
      * 开放平台上创建的应用的 ID
      */
+    @NotNull(message = "appId不能为空",groups = ModeKey.class)
     private String appId;
 
     /**
@@ -39,6 +44,7 @@ public class AlipayPayClientConfig implements PayClientConfig {
      * <p>
      * {@link #SIGN_TYPE_DEFAULT}
      */
+    @NotNull(message = "signType不能为空",groups = ModeKey.class)
     private String signType;
 
     /**
@@ -73,5 +79,14 @@ public class AlipayPayClientConfig implements PayClientConfig {
      */
 
     private String rootCertContent;
+
+    public interface ModeKey{
+
+    }
+
+    public void validate(Validator validator) {
+        ValidationUtils.validate(validator, this,
+                MODE_PUBLIC_KEY.equals(this.getMode()) ? ModeKey.class : ModeKey.class);
+    }
 
 }
